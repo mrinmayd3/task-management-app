@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Navbar() {
   const { token, logout } = useAuth();
+  const queryClient = useQueryClient();
 
   return (
     <header>
@@ -23,7 +25,14 @@ export default function Navbar() {
             </NavLink>
             {token ? (
               <>
-                <button onClick={logout}>Log out</button>
+                <button
+                  onClick={async () => {
+                    await queryClient.invalidateQueries();
+                    logout();
+                  }}
+                >
+                  Log out
+                </button>
               </>
             ) : (
               <>

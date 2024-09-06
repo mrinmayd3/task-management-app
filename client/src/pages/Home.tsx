@@ -1,3 +1,13 @@
+// components
+import AddTask from "../components/AddTask";
+import TaskList from "../components/TaskList";
+
 export default function Home() {
-  return <div>Home page</div>;
+  return (
+    <section>
+      <AddTask />
+
+      <TaskList />
+    </section>
+  );
 }

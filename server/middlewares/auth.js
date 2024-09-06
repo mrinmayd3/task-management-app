@@ -10,6 +10,8 @@ export const isAuthorized = async (req, res, next) => {
     token = authHeader.split(" ")[1];
   }
 
+  // console.log(token);
+
   try {
     if (!token) {
       res.status(401);
@@ -27,6 +29,6 @@ export const isAuthorized = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.json({ success: false, message: error.message });
+    res.status(401).json({ success: false, message: error.message });
   }
 };
