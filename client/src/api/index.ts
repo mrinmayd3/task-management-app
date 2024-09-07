@@ -18,8 +18,13 @@ export const getUser = () =>
   axios.get("/api/v1/users/current").then((res) => res.data);
 
 // get tasks handlers
-export const getTasks = async () => {
-  const res = await axios.get("/api/v1/tasks");
+export const getTasks = async (search: string, complete?: boolean | null) => {
+  const res = await axios.get("/api/v1/tasks", {
+    params: {
+      title: search,
+      complete,
+    },
+  });
   return res.data as TaskType[];
 };
 

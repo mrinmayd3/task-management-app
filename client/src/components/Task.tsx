@@ -31,7 +31,7 @@ export default function Task({
   };
 
   return (
-    <div className="p-4 shadow rounded">
+    <div className="p-4 shadow-lg rounded">
       <small
         className={`flex items-center gap-1 ${
           task.complete ? "text-green-500" : "text-yellow-500"
@@ -49,7 +49,11 @@ export default function Task({
           </>
         )}
       </small>
-      <p className="text-3xl text-wrap">{task.title}</p>
+      <p
+        className={`text-3xl text-wrap ${task.complete ? "line-through" : ""}`}
+      >
+        {task.title}
+      </p>
       <p className="text-gray-700 text-xs flex gap-1">
         <CalendarDateRangeIcon className="size-4" />{" "}
         {new Date(task.createdAt).toLocaleString()}

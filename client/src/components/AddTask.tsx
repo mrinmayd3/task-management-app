@@ -54,8 +54,7 @@ export default function AddTask() {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <h1>Filter</h1>
+      <div>
         <button
           onClick={openModal}
           className="bg-black text-white px-2 py-1 rounded flex items-center gap-1 cursor-pointer transition hover:scale-95 hover:bg-black/80"

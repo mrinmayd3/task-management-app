@@ -1,7 +1,17 @@
 import Task from "../models/task.js";
 
 const getAllTasks = async (req, res) => {
-  const tasks = await Task.find({ user_id: req.user.id });
+  const filters = { user_id: req.user.id };
+
+  if (req.query.title) {
+    filters.title = { $regex: req.query.title, $options: "i" };
+  }
+
+  if (req.query.complete) {
+    filters.complete = req.query.complete;
+  }
+
+  const tasks = await Task.find(filters);
 
   res.status(200).json(tasks);
 };

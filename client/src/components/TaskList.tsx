@@ -1,24 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
-
-import { useAuth } from "../contexts/AuthContext";
-import { getTasks } from "../api";
 
 // components
 import Task from "./Task";
 import UpdateTask from "./UpdateTask";
-import TaskListSkeleton from "./TaskListSkeleton";
 
 import { TaskType } from "../types/Task";
 
-export default function TaskList() {
+export default function TaskList({ tasks }: { tasks: TaskType[] }) {
   const [activeTask, setActiveTask] = useState<TaskType | null>(null);
   const updateDialogRef = useRef<HTMLDialogElement>(null);
-
-  const { updateToken } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!activeTask) return;
@@ -34,27 +24,6 @@ export default function TaskList() {
     setActiveTask(null);
     updateDialogRef.current?.close();
   };
-
-  const {
-    data: tasks,
-    isPending,
-    isError,
-    error,
-  } = useQuery<TaskType[], AxiosError>({
-    queryKey: ["tasks"],
-    queryFn: getTasks,
-  });
-
-  if (isPending) return <TaskListSkeleton />;
-
-  if (isError) {
-    if (error.status === 401) {
-      updateToken("");
-      navigate("/login");
-    } else {
-      return "An error has occurred: " + error.message;
-    }
-  }
 
   return (
     <>
