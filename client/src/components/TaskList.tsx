@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
 import { useAuth } from "../contexts/AuthContext";
-
-import { getTasks, TaskType } from "../api";
+import { getTasks } from "../api";
 
 // components
 import Task from "./Task";
 import UpdateTask from "./UpdateTask";
+import TaskListSkeleton from "./TaskListSkeleton";
+
+import { TaskType } from "../types/Task";
 
 export default function TaskList() {
   const [activeTask, setActiveTask] = useState<TaskType | null>(null);
@@ -43,7 +45,7 @@ export default function TaskList() {
     queryFn: getTasks,
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) return <TaskListSkeleton />;
 
   if (isError) {
     if (error.status === 401) {

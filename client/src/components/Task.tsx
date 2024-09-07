@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-import { deleteTask, TaskType } from "../api";
+import { deleteTask } from "../api";
 import {
   TrashIcon,
   PencilSquareIcon,
@@ -9,6 +9,7 @@ import {
   CheckBadgeIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
+import { TaskType } from "../types/Task";
 
 export default function Task({
   task,

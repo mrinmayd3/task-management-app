@@ -58,9 +58,9 @@ export default function AddTask() {
         <h1>Filter</h1>
         <button
           onClick={openModal}
-          className="bg-black text-white px-4 py-2 rounded flex items-center cursor-pointer"
+          className="bg-black text-white px-2 py-1 rounded flex items-center gap-1 cursor-pointer transition hover:scale-95 hover:bg-black/80"
         >
-          <PlusIcon className="size-6" /> <span>Add a task</span>
+          <PlusIcon className="size-5" /> <span>Add a task</span>
         </button>
       </div>
 

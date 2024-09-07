@@ -7,7 +7,8 @@ import SubmitBtn from "./SubmitBtn";
 import toast from "react-hot-toast";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import { TaskType, updateTask } from "../api";
+import { updateTask } from "../api";
+import { TaskType } from "../types/Task";
 
 export default function UpdateTask({
   task,

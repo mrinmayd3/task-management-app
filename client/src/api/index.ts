@@ -1,20 +1,8 @@
 import axios from "axios";
 import { LogInFormSchemaType } from "../schemas/loginFormSchema";
 import { RegisterFormSchemaType } from "../schemas/registerFormSchema";
-import {
-  TaskFormSchemaType,
-  // AddTaskFormSchemaType,
-} from "../schemas/taskFormSchema";
-
-export type TaskType = {
-  _id: string;
-  title: string;
-  description: string;
-  complete: boolean;
-  user_id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { TaskFormSchemaType } from "../schemas/taskFormSchema";
+import { TaskType } from "../types/Task";
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8081";
 
@@ -25,6 +13,9 @@ export const logIn = async (values: LogInFormSchemaType) =>
 
 export const registerHandler = async (values: RegisterFormSchemaType) =>
   await axios.post("/api/v1/users/register", values);
+
+export const getUser = () =>
+  axios.get("/api/v1/users/current").then((res) => res.data);
 
 // get tasks handlers
 export const getTasks = async () => {

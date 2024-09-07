@@ -26,8 +26,8 @@ export default function Navbar() {
             {token ? (
               <>
                 <button
-                  onClick={async () => {
-                    await queryClient.invalidateQueries();
+                  onClick={() => {
+                    queryClient.clear();
                     logout();
                   }}
                 >
