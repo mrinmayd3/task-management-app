@@ -29,7 +29,7 @@ export default function UpdateTask({
   });
 
   const onSubmitHandler: SubmitHandler<TaskFormSchemaType> = async (values) => {
-    console.log(values);
+    // console.log(values);
 
     try {
       const data = await updateTask(task._id, values);

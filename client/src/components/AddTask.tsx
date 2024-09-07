@@ -35,7 +35,7 @@ export default function AddTask() {
   };
 
   const onSubmitHandler: SubmitHandler<TaskFormSchemaType> = async (values) => {
-    console.log(values);
+    // console.log(values);
     try {
       const data = await addTask(values);
 

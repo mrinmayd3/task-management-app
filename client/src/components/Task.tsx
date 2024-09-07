@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -10,19 +9,15 @@ import {
   CheckBadgeIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import UpdateTask from "./UpdateTask";
 
-export default function Task({ task }: { task: TaskType }) {
-  const updateDialogRef = useRef<HTMLDialogElement>(null);
+export default function Task({
+  task,
+  openModal,
+}: {
+  task: TaskType;
+  openModal: (task: TaskType) => void;
+}) {
   const queryClient = useQueryClient();
-
-  const openModal = () => {
-    updateDialogRef.current?.showModal();
-  };
-
-  const closeModal = () => {
-    updateDialogRef.current?.close();
-  };
 
   const deleteTaskHandler = async () => {
     try {
@@ -65,19 +60,9 @@ export default function Task({ task }: { task: TaskType }) {
           <TrashIcon className="size-5" />
         </button>
 
-        <button onClick={openModal}>
+        <button onClick={() => openModal(task)}>
           <PencilSquareIcon className="size-5" />
         </button>
-      </div>
-
-      {/* update task modal */}
-      <div>
-        <dialog
-          ref={updateDialogRef}
-          className="w-[400px] p-5 rounded-md backdrop:bg-black/35"
-        >
-          <UpdateTask task={task} closeModal={closeModal} />
-        </dialog>
       </div>
     </div>
   );
