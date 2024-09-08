@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  /* @apply bg-gray-200; */
+body:has(dialog[open]) {
+  overflow: hidden;
 }

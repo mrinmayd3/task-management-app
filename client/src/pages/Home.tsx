@@ -11,10 +11,13 @@ import UserInfo from "../components/UserInfo";
 import TaskListSkeleton from "../components/TaskListSkeleton";
 
 import { TaskType } from "../types/Task";
+import useDebounce from "../hooks/useDebounce";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [selectedInput, SetSelectedInput] = useState<boolean | null>(null);
+
+  const debounceSearch = useDebounce(search);
 
   const {
     data: tasks,
@@ -22,18 +25,9 @@ export default function Home() {
     isError,
     error,
   } = useQuery<TaskType[], AxiosError>({
-    queryKey: ["tasks", search, selectedInput],
-    queryFn: () => getTasks(search, selectedInput),
+    queryKey: ["tasks", debounceSearch, selectedInput],
+    queryFn: () => getTasks(debounceSearch, selectedInput),
   });
-
-  // useEffect(() => {
-  //   console.log("runs", error);
-
-  //   if (error?.status === 401) {
-  //     localStorage.clear();
-  //     navigate("/login");
-  //   }
-  // }, [isError]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "true") {

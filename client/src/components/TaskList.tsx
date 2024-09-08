@@ -27,7 +27,7 @@ export default function TaskList({ tasks }: { tasks: TaskType[] }) {
 
   return (
     <>
-      <div className="mt-5 grid grid-cols-3 gap-2">
+      <div className="mt-5 grid sm:grid-cols-2 md:grid-cols-3 gap-2">
         {tasks?.map((task) => (
           <Task key={task._id} task={task} openModal={openModal} />
         ))}
