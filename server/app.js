@@ -19,11 +19,13 @@ app.use(cors());
 app.use("/api/v1/tasks", taskRoutes);
 app.use("/api/v1/users", userRoutes);
 
+app.all("*", (req, res) => {
+  res.status(404).send("404 Page not found");
+});
+
 // Port
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });
-
-// mrinmaydey48 A5Bt9nVMO5OurGSu

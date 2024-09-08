@@ -11,7 +11,7 @@ const getAllTasks = async (req, res) => {
     filters.complete = req.query.complete;
   }
 
-  const tasks = await Task.find(filters);
+  const tasks = await Task.find(filters).limit(req.query.limit || 10);
 
   res.status(200).json(tasks);
 };
