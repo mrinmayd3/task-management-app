@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 import {
   RegisterFormSchemaType,
@@ -47,7 +48,11 @@ export default function Register() {
         toast.error(data?.message);
       }
     } catch (error) {
-      toast.error("Something went wrong please try again");
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Something went wrong please try again");
+      }
     }
   };
 
