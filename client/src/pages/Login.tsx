@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,8 +13,10 @@ import { logIn } from "../api";
 import { useAuth } from "../contexts/AuthContext";
 
 import SubmitBtn from "../components/SubmitBtn";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { updateToken } = useAuth();
 
@@ -67,16 +70,28 @@ export default function Login() {
             <small className="text-red-500">{errors.email.message}</small>
           )}
         </div>
-        <div>
+        <div className="relative">
           <input
             className="w-full border border-black p-2 rounded-md"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             {...register("password")}
           />
           {errors.password && (
             <small className="text-red-500">{errors.password.message}</small>
           )}
+
+          <button
+            type="button"
+            className="absolute right-2 top-2 cursor-pointer"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? (
+              <EyeSlashIcon className="size-6" />
+            ) : (
+              <EyeIcon className="size-6" />
+            )}
+          </button>
         </div>
 
         <SubmitBtn

@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const registerFormSchema = z.object({
-  username: z.string().min(1).max(20),
+  username: z
+    .string()
+    .min(1, "Username must contain at least 1 character(s)")
+    .max(20),
   email: z.string().email("Invalid email address"),
   password: z
     .string()
