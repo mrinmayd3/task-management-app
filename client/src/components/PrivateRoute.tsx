@@ -6,7 +6,7 @@ export default function PrivateRoute({
 }: {
   children: React.ReactNode;
 }) {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
 
-  return token ? children : <Navigate to={"/login"} />;
+  return token && user ? children : <Navigate to={"/login"} />;
 }

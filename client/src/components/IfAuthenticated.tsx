@@ -8,7 +8,7 @@ export default function PrivateRoute({
   children: React.ReactNode;
   redirectTo: string;
 }) {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
 
-  return token ? <Navigate to={redirectTo} /> : children;
+  return token && user ? <Navigate to={redirectTo} /> : children;
 }

@@ -1,10 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function Navbar() {
-  const { token, logout } = useAuth();
-  const queryClient = useQueryClient();
+  const { token, user, logout } = useAuth();
 
   return (
     <header>
@@ -15,24 +13,17 @@ export default function Navbar() {
           </div>
 
           <div className="space-x-4">
-            <NavLink
-              to={"/"}
-              className={({ isActive }) =>
-                isActive ? "font-semibold border-b-2 border-black" : ""
-              }
-            >
-              Home
-            </NavLink>
-            {token ? (
+            {token && user ? (
               <>
-                <button
-                  onClick={() => {
-                    queryClient.clear();
-                    logout();
-                  }}
+                <NavLink
+                  to={"/"}
+                  className={({ isActive }) =>
+                    isActive ? "font-semibold border-b-2 border-black" : ""
+                  }
                 >
-                  Log out
-                </button>
+                  Home
+                </NavLink>
+                <button onClick={logout}>Log out</button>
               </>
             ) : (
               <>

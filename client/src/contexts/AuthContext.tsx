@@ -1,11 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { getUser } from "../api";
 
-type AuthContextType = {
-  token: string | null;
-  updateToken: (token: string) => void;
-  logout: () => void;
-};
+import { User } from "../types/User";
+import { AuthContextType } from "../types/AuthContextType";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -13,6 +12,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
+
+  const queryClient = useQueryClient();
+
+  const {
+    data: user,
+    isPending,
+    isError,
+    error,
+  } = useQuery<User, AxiosError>({
+    queryKey: ["user", token],
+    queryFn: getUser,
+    retry: 2,
+  });
 
   useEffect(() => {
     if (token) {
@@ -24,16 +36,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (!isPending && !user && isError) {
+      localStorage.clear();
+    }
+  }, [isError, user, isPending]);
+
   const updateToken = (newToken: string) => {
     setToken(newToken);
   };
 
   const logout = () => {
     setToken(null);
+    queryClient.clear();
   };
 
   return (
-    <AuthContext.Provider value={{ token, updateToken, logout }}>
+    <AuthContext.Provider
+      value={{ user, isPending, isError, error, token, updateToken, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
