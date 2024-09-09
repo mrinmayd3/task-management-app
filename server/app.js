@@ -16,6 +16,10 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
+app.get("/", (req, res) => {
+  res.status(200).send("Hello from server");
+});
+
 app.use("/api/v1/tasks", taskRoutes);
 app.use("/api/v1/users", userRoutes);
 
